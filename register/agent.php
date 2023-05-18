@@ -1,30 +1,40 @@
 <?php 
 
 require_once "../config.php";
+require_once "../src/validate_phone_number.php";
 
 session_start();
 $now = time();
 
 if(!empty($_SESSION['id'])){
-    if($now > $_SESSION['expires_at']) header("location:/auth/src/logout.php");
-    else header("location:/auth/{$_SESSION['role']}/index.php");
+    if($now > $_SESSION['expires_at']) header("location:/moha/src/logout.php");
+    else header("location:/moha/{$_SESSION['role']}/index.php");
 }
 
-if(isset($_POST['register'])){
-    $name = $_POST['name'];
-    $phone_number = $_POST['phone_number'];
-    $password = $_POST['password'];
-    $role_name = "agent";
+$name = $_POST['name'] ?? "";
+$phone_number = $_POST['phone_number'] ?? "";
+$password = $_POST['password'] ?? "";
+$role_name = "agent";
 
-    $stmt =$pdo->prepare("SELECT id FROM role WHERE name=:role"); 
-    $stmt->execute([
-        'role'=>$role_name,
-    ]);
-    $role = $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+if(isset($_POST['register'])){
+
+    if(validate_phone_number($phone_number) == null){
+        $server_response = "Invalid phone number";
+    }
+
+    if(empty($server_response)){
+
     try {
+        $stmt =$pdo->prepare("SELECT id FROM role WHERE name=:role"); 
+        $stmt->execute([
+            'role'=>$role_name,
+        ]);
+        $role = $stmt->fetch(PDO::FETCH_ASSOC);
         $stmt =$pdo->prepare("SELECT * FROM user WHERE phone_number=:phone_number"); 
         $stmt->execute([
-            'phone_number'=>$phone_number,
+            'phone_number'=>validate_phone_number($phone_number),
         ]);
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -33,7 +43,7 @@ if(isset($_POST['register'])){
             $stmt =$pdo->prepare("INSERT INTO user (name, phone_number, password, role) VALUES(:name, :phone_number, :password, :role)"); 
             $stmt->execute([
                 'name'=>$name,
-                'phone_number'=>$phone_number,
+                'phone_number'=>validate_phone_number($phone_number),
                 'password'=>$password,
                 'role'=> $role['id'],
             ]);
@@ -42,15 +52,16 @@ if(isset($_POST['register'])){
             $_SESSION['name'] = $name;
             $_SESSION['role'] = "agent";
             $_SESSION['expires_at'] = time() + 24 * 60 * 60;
-            header("location:/auth/agent/index.php");
+            $_SESSION['cart'] = [];
+            header("location:/moha/agent/index.php");
         } else {
-            echo "Phone number is already registered with another user.";
+            $server_response = "Phone number is already registered with another user.";
         }
     } catch (PDOException $e) {
         $server_response= $e->getMessage();
-        echo $e->getMessage();
-        
     }
+}
+
 
 }
 
@@ -66,11 +77,20 @@ if(isset($_POST['register'])){
 
 <body>
     <form method="post">
-        <input type="text" id="name" name="name" placeholder="Full name" />
-        <input type="text" id="phone_number" name="phone_number" placeholder="Phone number" />
-        <input type="password" id="password" name="password" placeholder="Password" />
+        <?php
+            if(!empty($server_response)){?>
+        <p><?php echo $server_response ?></p>
+        <?php } ?>
+        <input type="text" id="name" name="name" value="<?php echo $name;?>" placeholder="Full name" />
+        <input type="text" id="phone_number" name="phone_number" value="<?php echo $phone_number;?>"
+            placeholder="Phone number" />
+        <input type="password" id="password" name="password" value="<?php echo $password;?>" placeholder="Password" />
         <button id="register" name="register" type="submit">Register</button>
     </form>
 </body>
+
+
+
+<script src="https://unpkg.com/ethiopian-phone/dist/ethiopian-phone.min.js"></script>
 
 </html>

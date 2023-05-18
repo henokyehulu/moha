@@ -20,7 +20,7 @@ require_once "../src/needs_auth.php";
 
     </pre>
 
-    <a href="/auth/src/logout.php">Logout</a>
+    <a href="/moha/src/logout.php">Logout</a>
 </body>
 
 </html>

@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <a href="/auth/login.php">Login?</a>
+    <a href="/moha/login.php">Login?</a>
 </body>
 
 </html>

@@ -1,4 +1,5 @@
 <?php
+require_once "../config.php";
 require_once "../src/needs_auth.php";
 ?>
 <html lang="en">
@@ -11,16 +12,11 @@ require_once "../src/needs_auth.php";
 </head>
 
 <body>
-    <p>Hello big 🍆 <strong><?php  echo $_SESSION['name'] ?></strong>. Here you go</p>
-    <pre>
-        id: <?php  echo $_SESSION['id'] ?>,
-        name: <?php  echo $_SESSION['name'] ?>,
-        role: <?php  echo $_SESSION['role'] ?>,
-        session expires on: <?php  echo date('m/d/Y H:i:s', $_SESSION['expires_at']) ." (". date("H:i:s",$_SESSION['expires_at'] - time())  ." left)"; ?>
-
-    </pre>
-
-    <a href="/auth/src/logout.php">Logout</a>
+    <p>Hello big 🍆 <strong><?php  echo $user_name?></strong>.</p>
+    <a href="/moha/customer/order.php">Order</a>
+    <a href="/moha/customer/my-orders.php">My orders</a>
+    <a href="/moha/customer/profile.php">Profile</a>
+    <a href="/moha/src/logout.php">Logout</a>
 </body>
 
 </html>
