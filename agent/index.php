@@ -1,4 +1,5 @@
 <?php
+require_once "../config.php";
 require_once "../src/needs_auth.php";
 ?>
 <html lang="en">
@@ -11,12 +12,25 @@ require_once "../src/needs_auth.php";
 </head>
 
 <body>
-    <p>Hello big 🍆 <strong><?php  echo $_SESSION['name'] ?></strong>. Here you go</p>
+    <p>Hello big 🍆 <strong><?php echo $_SESSION['name'] ?></strong>. Here you go</p>
     <pre>
-        id: <?php  echo $_SESSION['id'] ?>,
-        name: <?php  echo $_SESSION['name'] ?>,
-        role: <?php  echo $_SESSION['role'] ?>,
-        session expires on: <?php  echo date('m/d/Y H:i:s', $_SESSION['expires_at']) ." (". date("H:i:s",$_SESSION['expires_at'] - time())  ." left)"; ?>
+        id: <?php echo $_SESSION['id'] ?>,
+        name: <?php echo $_SESSION['name'] ?>,
+        role: <?php echo $_SESSION['role'] ?>,
+        state: <?php
+                $stmt = $pdo->prepare("SELECT * FROM state WHERE id=?");
+                $stmt->execute([$_SESSION['state']]);
+                $state = $stmt->fetch();
+
+                echo $state['name'];
+                ?>,
+        session expires on: <?php echo date('m/d/Y H:i:s', $_SESSION['expires_at']) . " (" . date("H:i:s", $_SESSION['expires_at'] - time())  . " left)"; ?>,
+        status: <?php
+                $stmt = $pdo->prepare("SELECT status FROM user WHERE id=?");
+                $stmt->execute([$_SESSION['id']]);
+                $user = $stmt->fetch();
+                echo $user['status'];
+                ?>,
 
     </pre>
 

@@ -1,12 +1,10 @@
-<?php 
-    include_once "../config.php";
-    include_once "../src/needs_auth.php";
+<?php
+include_once "../config.php";
+include_once "../src/needs_auth.php";
 
-    $stmt = $pdo->prepare("SELECT * FROM user where id=:id");
-    $stmt->execute([
-        'id'=>$user_id,
-    ]);
-    $customer = $stmt->fetch(PDO::FETCH_ASSOC);
+$stmt = $pdo->prepare("SELECT * FROM user where id=?");
+$stmt->execute([$user_id]);
+$customer = $stmt->fetch(PDO::FETCH_ASSOC);
 
 ?>
 <html lang="en">
@@ -24,6 +22,8 @@
     <p>id : <?php echo $customer['id'] ?></p>
     <p>name : <?php echo $customer['name'] ?></p>
     <p>phone number : <?php echo $customer['phone_number'] ?></p>
+    <p>TIN : <?php echo $customer['tin'] ?? "none" ?></p>
+    <p>Status : <?php echo $customer['status'] ?></p>
     <a href="/moha/customer/edit-profile.php">Edit profile</a>
     <a href="/moha/customer/change-password.php">Change password</a>
     <a href="/moha/customer/delete-account.php">Delete account</a>

@@ -126,7 +126,7 @@ if (isset($_POST['login'])) {
                                             </label>
                                         </div>
                                         <div class="form-control-wrap">
-                                            <input type="tel" name="phone_number" class="form-control form-control-lg" id="phone_number" value="<?php echo $phone_number; ?>" required />
+                                            <input type="tel" name="phone_number" class="form-control form-control-lg" id="phone_number" value="<?php echo $phone_number; ?>" placeholder="0910203040" required />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -140,7 +140,7 @@ if (isset($_POST['login'])) {
                                                 <em class="passcode-icon icon-show icon ni ni-eye"></em>
                                                 <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
                                             </a>
-                                            <input type="password" name="password" class="form-control form-control-lg" id="password" required />
+                                            <input type="password" name="password" class="form-control form-control-lg" id="password" placeholder="******" required />
                                         </div>
                                     </div>
                                     <div class="form-group">
