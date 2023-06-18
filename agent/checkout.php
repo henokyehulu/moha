@@ -2,7 +2,7 @@
 include_once("../config.php");
 include_once("../src/needs_auth.php");
 if (count($_SESSION['cart']) == 0) {
-    header("location:/moha/customer/order.php");
+    header("location:/moha/agent/order.php");
 }
 $products_in_cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
 $products = array();
@@ -23,16 +23,16 @@ if ($products_in_cart) {
 }
 
 if (isset($_POST['make_order'])) {
-    $stmt = $pdo->prepare("INSERT INTO customer_order (customer, amount) VALUES(:customer_id, :amount)");
+    $stmt = $pdo->prepare("INSERT INTO agent_order (agent, amount) VALUES(:agent, :amount)");
     $stmt->execute([
-        'customer_id' => intval($user_id),
+        'agent' => intval($user_id),
         'amount' => $total,
     ]);
 
     $_SESSION['cart'] = [];
 
     echo "<script>
-        window.location.href='/moha/customer/my-orders.php';
+        window.location.href='/moha/agent/my-orders.php';
         alert('Order successfully placed!');
         </script>";
 }
@@ -49,7 +49,7 @@ if (isset($_POST['make_order'])) {
 </head>
 
 <body>
-    <a href="/moha/customer/cart.php">back</a>
+    <a href="/moha/agent/cart.php">back</a>
 
     <p>Cart:</p>
     <table>

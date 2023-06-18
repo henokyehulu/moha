@@ -49,7 +49,6 @@ if (isset($_POST['register'])) {
                     'state' => $state_id,
                     'tin' => $tin,
                 ]);
-
                 $_SESSION['id'] = $pdo->lastInsertId();
                 $_SESSION['name'] = $name;
                 $_SESSION['role'] = "agent";

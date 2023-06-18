@@ -1,6 +1,11 @@
 <?php
 require_once "../config.php";
 require_once "../src/needs_auth.php";
+
+$stmt = $pdo->prepare("SELECT 
+customer_order.id,COUNT(customer_order.id) AS total, (customer.name) AS customer_name FROM customer_order INNER JOIN user AS customer ON customer_order.customer = customer.id  WHERE customer.state = ? AND customer_order.status = 'pending'");
+$stmt->execute([$user_state]);
+$requests = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 <html lang="en">
 
@@ -12,28 +17,12 @@ require_once "../src/needs_auth.php";
 </head>
 
 <body>
-    <p>Hello big 🍆 <strong><?php echo $_SESSION['name'] ?></strong>. Here you go</p>
-    <pre>
-        id: <?php echo $_SESSION['id'] ?>,
-        name: <?php echo $_SESSION['name'] ?>,
-        role: <?php echo $_SESSION['role'] ?>,
-        state: <?php
-                $stmt = $pdo->prepare("SELECT * FROM state WHERE id=?");
-                $stmt->execute([$_SESSION['state']]);
-                $state = $stmt->fetch();
-
-                echo $state['name'];
-                ?>,
-        session expires on: <?php echo date('m/d/Y H:i:s', $_SESSION['expires_at']) . " (" . date("H:i:s", $_SESSION['expires_at'] - time())  . " left)"; ?>,
-        status: <?php
-                $stmt = $pdo->prepare("SELECT status FROM user WHERE id=?");
-                $stmt->execute([$_SESSION['id']]);
-                $user = $stmt->fetch();
-                echo $user['status'];
-                ?>,
-
-    </pre>
-
+    <p>Hello big 🍆 <strong><?php echo $user_name ?></strong>.</p>
+    <a href="/moha/agent/requests.php">Requests(<?php echo $requests['total'] ?? "0" ?>)</a>
+    <a href="/moha/agent/order.php">Order</a>
+    <a href="/moha/agent/customer-orders.php">Customer orders</a>
+    <a href="/moha/agent/my-orders.php">My orders</a>
+    <a href="/moha/agent/profile.php">Profile</a>
     <a href="/moha/src/logout.php">Logout</a>
 </body>
 

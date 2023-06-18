@@ -37,6 +37,7 @@ if (isset($_POST['login'])) {
                 $_SESSION['id'] = $row['id'];
                 $_SESSION['name'] = $row['name'];
                 $_SESSION['role'] = $role['name'];
+                $_SESSION['state'] = $row['state'];
                 $_SESSION['expires_at'] = time() + 24 * 60 * 60;
                 $_SESSION['cart'] = [];
 

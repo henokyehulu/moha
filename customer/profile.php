@@ -23,7 +23,6 @@ $customer = $stmt->fetch(PDO::FETCH_ASSOC);
     <p>name : <?php echo $customer['name'] ?></p>
     <p>phone number : <?php echo $customer['phone_number'] ?></p>
     <p>TIN : <?php echo $customer['tin'] ?? "none" ?></p>
-    <p>Status : <?php echo $customer['status'] ?></p>
     <a href="/moha/customer/edit-profile.php">Edit profile</a>
     <a href="/moha/customer/change-password.php">Change password</a>
     <a href="/moha/customer/delete-account.php">Delete account</a>

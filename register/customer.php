@@ -48,10 +48,9 @@ if (isset($_POST['register'])) {
                     'role' => $role['id'],
                     'state' => $state_id,
                 ]);
-
                 $_SESSION['id'] = $pdo->lastInsertId();
                 $_SESSION['name'] = $name;
-                $_SESSION['role'] = "customer";
+                $_SESSION['role'] = "agent";
                 $_SESSION['state'] = $state_id;
                 $_SESSION['expires_at'] = time() + 24 * 60 * 60;
                 $_SESSION['cart'] = [];
