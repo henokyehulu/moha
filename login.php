@@ -25,7 +25,7 @@ if (isset($_POST['login'])) {
             $stmt = $pdo->prepare("SELECT * FROM user WHERE phone_number=:phone_number AND password=:password");
             $stmt->execute([
                 'phone_number' => validate_phone_number($phone_number),
-                'password' => $password,
+                'password' => md5($password),
             ]);
 
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -133,8 +133,6 @@ if (isset($_POST['login'])) {
                                     <div class="form-group">
                                         <div class="form-label-group">
                                             <label class="form-label" for="password">Password</label>
-                                            <!-- <a class="link link-primary link-sm"
-                                                href="/moha/pages/auths/auth-reset-v2.html">Forgot Code?</a> -->
                                         </div>
                                         <div class="form-control-wrap">
                                             <a class="form-icon form-icon-right passcode-switch lg" data-target="password">

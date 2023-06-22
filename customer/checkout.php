@@ -7,7 +7,8 @@ if (count($_SESSION['cart']) == 0) {
 $products_in_cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
 $products = array();
 $subtotal = 0.00;
-$shipping = 0.00;
+$shipping = 0;
+$tax = 0.00;
 $total = 0.00;
 if ($products_in_cart) {
     $array_to_question_marks = implode(',', array_fill(0, count($products_in_cart), '?'));
@@ -19,7 +20,8 @@ if ($products_in_cart) {
         $subtotal += (float)($product['price'] * (int)$products_in_cart[$product['id']] * 24);
     }
     $shipping += array_sum($products_in_cart) * 50;
-    $total = $shipping + $subtotal;
+    $tax = $shipping + $subtotal * 0.15;
+    $total = $shipping + $subtotal + $tax;
 }
 
 if (isset($_POST['make_order'])) {
@@ -28,6 +30,17 @@ if (isset($_POST['make_order'])) {
         'customer_id' => intval($user_id),
         'amount' => $total,
     ]);
+    $order_id = $pdo->lastInsertId();
+
+    foreach ($products as $product) {
+        $stmt = $pdo->prepare("INSERT INTO orderandproduct_customer (order_id, product_id, quantity) VALUES(:order_id, :product_id, :quantity)");
+        $stmt->execute([
+            'order_id' => $order_id,
+            'product_id' => $product['id'],
+            'quantity' => (int)$products_in_cart[$product['id']],
+        ]);
+    }
+
 
     $_SESSION['cart'] = [];
 

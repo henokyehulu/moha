@@ -6,19 +6,7 @@ $stmt = $pdo->prepare("SELECT customer_order.id, (customer.name) AS customer_nam
 $stmt->execute([$user_state]);
 $requests = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if (isset($_POST['accept_request'])) {
-    $order_id = $_POST['id'];
-    $stmt = $pdo->prepare("UPDATE customer_order SET status=:status,agent=:agent_id WHERE id=:order_id");
-    $stmt->execute([
-        'status' => "agent_accepted",
-        'agent_id' => $user_id,
-        'order_id' => $order_id
-    ]);
-    echo "<script>
-    window.location.href='/moha/agent/customer-orders.php';
-    alert('Order accepted successfully!');
-    </script>";
-}
+
 
 ?>
 
@@ -56,10 +44,13 @@ if (isset($_POST['accept_request'])) {
                         </td>
                         <td class="price">&dollar;<?php echo $request['amount'] ?></td>
                         <td class="price">
-                            <form method="post">
+                            <a href="/moha/agent/request.php?order_id=<?php echo $request['id'] ?>">
+                                <button>View order</button>
+                            </a>
+                            <!-- <form method="post">
                                 <input name="id" value="<?php echo $request['id'] ?>" type="id" hidden required />
                                 <button name="accept_request">Accept</button>
-                            </form>
+                            </form> -->
                         </td>
                     </tr>
                 <?php endforeach; ?>

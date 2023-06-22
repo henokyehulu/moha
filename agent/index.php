@@ -17,7 +17,7 @@ $requests = $stmt->fetch(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-    <p>Hello big 🍆 <strong><?php echo $user_name ?></strong>.</p>
+    <p>Hello big  <strong><?php echo $user_name ?></strong>.</p>
     <a href="/moha/agent/requests.php">Requests(<?php echo $requests['total'] ?? "0" ?>)</a>
     <a href="/moha/agent/order.php">Order</a>
     <a href="/moha/agent/customer-orders.php">Customer orders</a>

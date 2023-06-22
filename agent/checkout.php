@@ -2,7 +2,7 @@
 include_once("../config.php");
 include_once("../src/needs_auth.php");
 if (count($_SESSION['cart']) == 0) {
-    header("location:/moha/agent/order.php");
+    header("location:/moha/admin/order.php");
 }
 $products_in_cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
 $products = array();
@@ -23,11 +23,22 @@ if ($products_in_cart) {
 }
 
 if (isset($_POST['make_order'])) {
-    $stmt = $pdo->prepare("INSERT INTO agent_order (agent, amount) VALUES(:agent, :amount)");
+    $stmt = $pdo->prepare("INSERT INTO agent_order (agent, amount) VALUES(:agent_id, :amount)");
     $stmt->execute([
-        'agent' => intval($user_id),
+        'agent_id' => intval($user_id),
         'amount' => $total,
     ]);
+    $order_id = $pdo->lastInsertId();
+
+    foreach ($products as $product) {
+        $stmt = $pdo->prepare("INSERT INTO orderandproduct_agent (order_id, product_id, quantity) VALUES(:order_id, :product_id, :quantity)");
+        $stmt->execute([
+            'order_id' => $order_id,
+            'product_id' => $product['id'],
+            'quantity' => (int)$products_in_cart[$product['id']],
+        ]);
+    }
+
 
     $_SESSION['cart'] = [];
 

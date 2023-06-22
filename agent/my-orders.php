@@ -36,7 +36,7 @@ if (isset($_POST['mark_as_delivered'])) {
             <td>id</td>
             <td>amount</td>
             <td>status</td>
-            <td>action</td>
+            <!-- <td>action</td> -->
         </thead>
         <tbody>
             <?php if (empty($orders)) : ?>
@@ -49,7 +49,7 @@ if (isset($_POST['mark_as_delivered'])) {
                         <td class="price"><?php echo $order['id'] ?></td>
                         <td class="price">&dollar;<?php echo $order['amount'] ?></td>
                         <td class="price"><?php echo $order['status'] ?></td>
-                        <td class="price">
+                        <!-- <td class="price">
                             <?php
                             if ($order['status'] == "delivered") { ?>
                                 <p>Delivered!</p>
@@ -61,7 +61,7 @@ if (isset($_POST['mark_as_delivered'])) {
                                 </form>
                             <?php }
                             ?>
-                        </td>
+                        </td> -->
                     </tr>
                 <?php endforeach; ?>
             <?php endif; ?>
