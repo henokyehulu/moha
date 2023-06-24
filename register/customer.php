@@ -40,13 +40,14 @@ if (isset($_POST['register'])) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($stmt->rowCount() === 0) {
-                $stmt = $pdo->prepare("INSERT INTO user (name, phone_number, password, role, state) VALUES(:name, :phone_number, :password, :role, :state)");
+                $stmt = $pdo->prepare("INSERT INTO user (name, phone_number, password, role, state, status) VALUES(:name, :phone_number, :password, :role, :state, :status)");
                 $stmt->execute([
                     'name' => $name,
                     'phone_number' => validate_phone_number($phone_number),
                     'password' => md5($password),
                     'role' => $role['id'],
                     'state' => $state_id,
+                    'status' => "active"
                 ]);
                 $_SESSION['id'] = $pdo->lastInsertId();
                 $_SESSION['name'] = $name;

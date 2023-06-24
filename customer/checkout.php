@@ -4,6 +4,11 @@ include_once("../src/needs_auth.php");
 if (count($_SESSION['cart']) == 0) {
     header("location:/moha/customer/order.php");
 }
+
+$stmt = $pdo->prepare("SELECT * FROM user WHERE id = ?");
+$stmt->execute([$user_id]);
+$customer = $stmt->fetch(PDO::FETCH_ASSOC);
+
 $products_in_cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : array();
 $products = array();
 $subtotal = 0.00;
@@ -25,29 +30,42 @@ if ($products_in_cart) {
 }
 
 if (isset($_POST['make_order'])) {
-    $stmt = $pdo->prepare("INSERT INTO customer_order (customer, amount) VALUES(:customer_id, :amount)");
-    $stmt->execute([
-        'customer_id' => intval($user_id),
-        'amount' => $total,
-    ]);
-    $order_id = $pdo->lastInsertId();
 
-    foreach ($products as $product) {
-        $stmt = $pdo->prepare("INSERT INTO orderandproduct_customer (order_id, product_id, quantity) VALUES(:order_id, :product_id, :quantity)");
+    if (is_null($customer['address_1'])) {
+        echo "<script>
+        window.location.href='/moha/customer/edit-address.php';
+        alert('Please provide an address to proceed to payment!');
+        </script>";
+    } else if ($customer['status'] != "active") {
+        echo "<script>
+        window.location.href='/moha/customer/index.php';
+        alert('Your account is not active. Please contact support@moha.com');
+        </script>";
+    } else {
+        $stmt = $pdo->prepare("INSERT INTO customer_order (customer, amount) VALUES(:customer_id, :amount)");
         $stmt->execute([
-            'order_id' => $order_id,
-            'product_id' => $product['id'],
-            'quantity' => (int)$products_in_cart[$product['id']],
+            'customer_id' => intval($user_id),
+            'amount' => $total,
         ]);
-    }
+        $order_id = $pdo->lastInsertId();
+
+        foreach ($products as $product) {
+            $stmt = $pdo->prepare("INSERT INTO orderandproduct_customer (order_id, product_id, quantity) VALUES(:order_id, :product_id, :quantity)");
+            $stmt->execute([
+                'order_id' => $order_id,
+                'product_id' => $product['id'],
+                'quantity' => (int)$products_in_cart[$product['id']],
+            ]);
+        }
 
 
-    $_SESSION['cart'] = [];
+        $_SESSION['cart'] = [];
 
-    echo "<script>
+        echo "<script>
         window.location.href='/moha/customer/my-orders.php';
         alert('Order successfully placed!');
         </script>";
+    }
 }
 
 
