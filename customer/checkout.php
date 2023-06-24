@@ -52,61 +52,162 @@ if (isset($_POST['make_order'])) {
 
 
 ?>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="zxx" class="js">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
+    <base href="../">
+    <meta charset="utf-8">
+    <meta name="author" content="Softnio">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="./images/favicon.png">
+    <!-- Page Title  -->
+    <title>Customer | Order</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="./assets/css/dashlite.css?ver=3.1.3">
+    <link id="skin-default" rel="stylesheet" href="./assets/css/theme.css?ver=3.1.3">
 </head>
 
-<body>
-    <a href="/moha/customer/cart.php">back</a>
+<body class="nk-body bg-lighter npc-default has-sidebar ">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- wrap @s -->
+            <div class="nk-wrap ">
 
-    <p>Cart:</p>
-    <table>
-        <tbody>
-            <?php if (empty($products)) : ?>
-                <tr>
-                    <td colspan="5" style="text-align:center;">You have no products added in your Shopping Cart</td>
-                </tr>
-            <?php else : ?>
-                <?php foreach ($products as $product) : ?>
-                    <tr>
-                        <td>
-                            <p> x<?php echo $products_in_cart[$product['id']] . " " . $product['name'] ?> creat</p>
-                        </td>
-                        <td class="price">&dollar;<?php echo $product['price'] * $products_in_cart[$product['id']] * 24 ?></td>
+                <!-- content @s -->
+                <div class="nk-content ">
+                    <div class="container">
+                        <div class="nk-content-inner">
+                            <div class="nk-content-body">
+                                <div class="nk-block-head nk-block-head-sm">
+                                    <div class="nk-block-between g-3">
+                                        <div class="nk-block-head-content">
+                                            <h3 class="nk-block-title page-title">Check out</h3>
+                                        </div>
+                                        <div class="nk-block-head-content">
+                                            <a href="/moha/customer/cart.php" class="btn btn-outline-light bg-white d-none d-sm-inline-flex"><em class="icon ni ni-arrow-left"></em><span>Back</span></a>
+                                            <a href="html/product-list.html" class="btn btn-icon btn-outline-light bg-white d-inline-flex d-sm-none"><em class="icon ni ni-arrow-left"></em></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="nk-block">
+                                    <div class="row g-gs">
+                                        <div class="col-7 card p-4">
+                                            <div class="invoice-bills">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="w-150px">Item ID</th>
+                                                                <th class="w-60">Name</th>
+                                                                <th>Price</th>
+                                                                <th>Qty</th>
+                                                                <th>Amount</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php
+                                                            if (empty($products)) {
+                                                                echo "<pre>";
+                                                                var_dump($products);
+                                                                echo "</pre>";
+                                                                echo "No products added yet.";
+                                                            } else {
+                                                                foreach ($products as $product) { ?>
+                                                                    <tr>
+                                                                        <td><?php echo $product['id'] ?></td>
+                                                                        <td><?php echo $product['name'] ?></td>
+                                                                        <td>$<?php echo $product['price'] ?></td>
+                                                                        <td><?php echo $products_in_cart[$product['id']] ?></td>
+                                                                        <td>$<?php echo $product['price'] * $products_in_cart[$product['id']] * 24 ?></td>
+                                                                    </tr>
 
-                    </tr>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td class="text" colspan="5">Subtotal</td>
-                <td style="text-align: end;" colspan="3" class="price">
-                    &dollar;<?php echo $subtotal ?>
-                </td>
-            </tr>
-            <tr>
-                <td class="text" colspan="5">Shipping</td>
-                <td style="text-align: end;" colspan="3" class="price">
-                    &dollar;<?php echo $shipping ?>
-                </td>
-            </tr>
-            <tr>
-                <td class="text" colspan="5">Total</td>
-                <td style="text-align: end;" colspan="3" class="price">
-                    &dollar;<?php echo $total ?>
-                </td>
-            </tr>
-        </tfoot>
-    </table>
-    <form method="post">
-        <button name="make_order" type="submit">Make order</button>
-    </form>
+                                                            <?php       }
+                                                            }
+                                                            ?>
+
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <td colspan="2"></td>
+                                                                <td colspan="2">Subtotal</td>
+                                                                <td>$<?php echo $subtotal ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2"></td>
+                                                                <td colspan="2">Shipping</td>
+                                                                <td>$<?php echo $shipping ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2"></td>
+                                                                <td colspan="2">TAX</td>
+                                                                <td>$<?php echo $tax ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2"></td>
+                                                                <td colspan="2">Grand Total</td>
+                                                                <td>$<?php echo $total ?></td>
+                                                            </tr>
+                                                        </tfoot>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="card">
+                                                <div class="card-inner-group">
+                                                    <div class="card-inner card-inner-md">
+                                                        <div class="card-title-group">
+                                                            <div class="card-title">
+                                                                <h6 class="title">Payment options</h6>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- .card-inner -->
+                                                    <form method="post" class="card-inner">
+                                                        <div class="nk-wg-action">
+                                                            <div class="nk-wg-action-content">
+                                                                <em class="icon ni ni-cc-alt-fill"></em>
+                                                                <div class="title">Tele birr</div>
+                                                                <p>Send the total amount to merchant id <strong>7129074102943</strong>.</p>
+                                                            </div>
+                                                            <button type="submit" name="make_order" class="btn btn-icon btn-trigger me-n2"><em class="icon ni ni-forward-ios"></em></button>
+                                                        </div>
+                                                    </form><!-- .card-inner -->
+                                                    <form method="post" class="card-inner">
+                                                        <div class="nk-wg-action">
+                                                            <div class="nk-wg-action-content">
+                                                                <em class="icon ni ni-help-fill"></em>
+                                                                <div class="title">CBE mobile banking</div>
+                                                                <p>Send the total amount to account number: 100008304823948 and send the recipt to <strong>payment@moha.com</strong> </p>
+                                                            </div>
+                                                            <button type="submit" name="make_order" class="btn btn-icon btn-trigger me-n2"><em class="icon ni ni-forward-ios"></em></button>
+                                                        </div>
+                                                    </form><!-- .card-inner -->
+                                                </div><!-- .card-inner-group -->
+                                            </div><!-- .card -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- content @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+    <!-- JavaScript -->
+    <script src="./assets/js/bundle.js?ver=3.1.3"></script>
+    <script src="./assets/js/scripts.js?ver=3.1.3"></script>
+    <script src="./assets/js/charts/chart-ecommerce.js?ver=3.1.3"></script>
 </body>
 
 </html>

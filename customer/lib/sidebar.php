@@ -39,6 +39,12 @@
                             </li>
                         </ul><!-- .nk-menu-sub -->
                     </li><!-- .nk-menu-item -->
+                    <li class="nk-menu-item">
+                        <a href="/moha/customer/transactions.php" class="nk-menu-link">
+                            <span class="nk-menu-icon"><em class="icon ni ni-tranx"></em></span>
+                            <span class="nk-menu-text">Transactions</span>
+                        </a>
+                    </li>
                 </ul><!-- .nk-menu -->
             </div><!-- .nk-sidebar-menu -->
         </div><!-- .nk-sidebar-content -->

@@ -2,7 +2,7 @@
 include_once "../config.php";
 include_once "../src/needs_auth.php";
 
-$stmt = $pdo->prepare("SELECT customer_order.id,customer_order.created_at,customer_order.amount,customer_order.status,agent.name AS agent_name,SUM(orderandproduct_customer.quantity) AS quantity FROM orderandproduct_customer INNER JOIN customer_order ON customer_order.id = orderandproduct_customer.order_id LEFT JOIN user AS agent ON customer_order.agent = agent.id WHERE customer_order.customer = ? AND customer_order.status != 'success'  GROUP BY orderandproduct_customer.order_id ORDER BY customer_order.created_at DESC");
+$stmt = $pdo->prepare("SELECT customer_order.id,customer_order.created_at,customer_order.amount,customer_order.status,agent.name AS agent_name,SUM(orderandproduct_customer.quantity) AS quantity FROM orderandproduct_customer INNER JOIN customer_order ON customer_order.id = orderandproduct_customer.order_id LEFT JOIN user AS agent ON customer_order.agent = agent.id WHERE customer_order.customer = ? AND customer_order.status = 'success'  GROUP BY orderandproduct_customer.order_id ORDER BY customer_order.created_at DESC");
 $stmt->execute([$user_id]);
 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -31,7 +31,7 @@ if (isset($_POST['mark_as_received'])) {
     <!-- Fav Icon  -->
     <link rel="shortcut icon" href="./images/favicon.png">
     <!-- Page Title  -->
-    <title>Customer | My orders</title>
+    <title>Customer | Transactions</title>
     <!-- StyleSheets  -->
     <link rel="stylesheet" href="./assets/css/dashlite.css?ver=3.1.3">
     <link id="skin-default" rel="stylesheet" href="./assets/css/theme.css?ver=3.1.3">
@@ -54,20 +54,7 @@ if (isset($_POST['mark_as_received'])) {
                                 <div class="nk-block-head nk-block-head-sm">
                                     <div class="nk-block-between">
                                         <div class="nk-block-head-content">
-                                            <h3 class="nk-block-title page-title">Orders</h3>
-                                        </div><!-- .nk-block-head-content -->
-                                        <div class="nk-block-head-content">
-                                            <div class="toggle-wrap nk-block-tools-toggle">
-                                                <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
-                                                <div class="toggle-expand-content" data-content="pageMenu">
-                                                    <ul class="nk-block-tools g-3">
-                                                        <li class="nk-block-tools-opt">
-                                                            <a href="#" class="btn btn-icon btn-primary d-md-none"><em class="icon ni ni-plus"></em></a>
-                                                            <a href="/moha/customer/order.php" class="btn btn-primary d-none d-md-inline-flex"><em class="icon ni ni-cart"></em><span>Order</span></a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                            <h3 class="nk-block-title page-title">Transactions</h3>
                                         </div><!-- .nk-block-head-content -->
                                     </div><!-- .nk-block-between -->
                                 </div><!-- .nk-block-head -->

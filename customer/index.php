@@ -4,8 +4,8 @@ include_once "../src/needs_auth.php";
 
 
 
-$stmt = $pdo->prepare("SELECT COUNT(amount) AS total FROM customer_order");
-$stmt->execute();
+$stmt = $pdo->prepare("SELECT COUNT(amount) AS total FROM customer_order WHERE customer = ?");
+$stmt->execute([$user_id]);
 $total_orders = $stmt->fetch(PDO::FETCH_ASSOC);
 
 $stmt = $pdo->prepare("SELECT SUM(amount) AS total FROM customer_order");
@@ -157,7 +157,7 @@ $recent_orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                         <?php foreach ($recent_orders as $order) : ?>
                                                             <div class="nk-tb-item">
                                                                 <div class="nk-tb-col">
-                                                                    <span class="tb-lead"><a href="#">#<?php echo $order['id'] ?></a></span>
+                                                                    <span class="tb-lead"><a>#<?php echo $order['id'] ?></a></span>
                                                                 </div>
                                                                 <div class="nk-tb-col tb-col-sm">
                                                                     <?php if (!empty($order['agent_name'])) { ?>
