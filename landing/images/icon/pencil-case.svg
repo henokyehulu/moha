@@ -5,7 +5,7 @@
 			<rect id="SVGID_1_" x="0.5" y="0.1" width="371.6" height="512"/>
 		</defs>
 		<clipPath id="SVGID_2_">
-			<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+			<use xlink:href="/moha#SVGID_1_"  style="overflow:visible;"/>
 		</clipPath>
 		<path style="clip-path:url(#SVGID_2_)" d="M221.8,329.3c-14.3,0-26,11.7-26,26c0,14.4,11.7,26,26,26c14.4,0,26-11.7,26-26S236.2,329.3,221.8,329.3
 			 M221.8,364.8c-5.2,0-9.4-4.2-9.4-9.4s4.2-9.4,9.4-9.4c5.2,0,9.4,4.2,9.4,9.4S227,364.8,221.8,364.8z"/>
@@ -15,7 +15,7 @@
 			<rect id="SVGID_3_" x="0.5" y="0.1" width="371.6" height="512"/>
 		</defs>
 		<clipPath id="SVGID_4_">
-			<use xlink:href="#SVGID_3_"  style="overflow:visible;"/>
+			<use xlink:href="/moha#SVGID_3_"  style="overflow:visible;"/>
 		</clipPath>
 		<path style="clip-path:url(#SVGID_4_)" d="M356.1,49.5l3.5-10.4c1.5-4.4-0.9-9.1-5.2-10.6c-4.4-1.5-9.1,0.9-10.6,5.2l-3.5,10.4
 			c-6.1-0.5-12.2,0.6-17.9,3.4c-8.2,4-14.3,11-17.2,19.7l-32.7,96.2h-10.1l-1.7-120.9c-0.2-11.2-9.4-20.4-20.7-20.4

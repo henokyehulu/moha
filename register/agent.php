@@ -7,15 +7,14 @@ session_start();
 $now = time();
 
 if (!empty($_SESSION['id'])) {
-    if ($now > $_SESSION['expires_at']) header("location:/moha/src/logout.php");
-    else header("location:/moha/{$_SESSION['role']}/index.php");
+    if ($now > $_SESSION['expires_at']) header("location:src/logout.php");
+    else header("location:{$_SESSION['role']}/index.php");
 }
 
 $name = $_POST['name'] ?? "";
 $phone_number = $_POST['phone_number'] ?? "";
 $password = $_POST['password'] ?? "";
 $state_id = $_POST['state'] ?? "";
-$tin = $_POST['tin'] ?? "";
 $role_name = "agent";
 
 
@@ -40,14 +39,13 @@ if (isset($_POST['register'])) {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($stmt->rowCount() === 0) {
-                $stmt = $pdo->prepare("INSERT INTO user (name, phone_number, password, role, state, tin) VALUES(:name, :phone_number, :password, :role, :state, :tin)");
+                $stmt = $pdo->prepare("INSERT INTO user (name, phone_number, password, role, state) VALUES(:name, :phone_number, :password, :role, :state)");
                 $stmt->execute([
                     'name' => $name,
                     'phone_number' => validate_phone_number($phone_number),
                     'password' => md5($password),
                     'role' => $role['id'],
                     'state' => $state_id,
-                    'tin' => $tin,
                 ]);
                 $_SESSION['id'] = $pdo->lastInsertId();
                 $_SESSION['name'] = $name;
@@ -55,7 +53,7 @@ if (isset($_POST['register'])) {
                 $_SESSION['state'] = $state_id;
                 $_SESSION['expires_at'] = time() + 24 * 60 * 60;
                 $_SESSION['cart'] = [];
-                header("location:/moha/agent/index.php");
+                header("locatio../agent/index.php");
             } else {
                 $server_error = "Phone number is already registered with another user.";
             }
@@ -72,10 +70,10 @@ if (isset($_POST['register'])) {
     <meta name="author" content="Softnio">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="MOHA.">
-    <link rel="shortcut icon" href="/moha/images/favicon.png">
+    <link rel="shortcut icon" href="/mohaimages/favicon.png">
     <title>Agent registration</title>
-    <link rel="stylesheet" href="/moha/assets/css/dashlite.css?ver=3.1.3">
-    <link id="skin-default" rel="stylesheet" href="/moha/assets/css/theme.css?ver=3.1.3">
+    <link rel="stylesheet" href="/mohaassets/css/dashlite.css?ver=3.1.3">
+    <link id="skin-default" rel="stylesheet" href="/mohaassets/css/theme.css?ver=3.1.3">
 </head>
 
 <body class="nk-body bg-white npc-default pg-auth">
@@ -86,15 +84,15 @@ if (isset($_POST['register'])) {
                     <div class="nk-split nk-split-page nk-split-lg">
                         <div class="nk-split-content nk-block-area nk-block-area-column nk-auth-container bg-white">
                             <div class="absolute-top-right d-lg-none p-3 p-sm-5">
-                                <a href="#" class="toggle btn-white btn btn-icon btn-light" data-target="athPromo">
+                                <a href="/moha#" class="toggle btn-white btn btn-icon btn-light" data-target="athPromo">
                                     <em class="icon ni ni-info"></em>
                                 </a>
                             </div>
                             <div class="nk-block nk-block-middle nk-auth-body">
                                 <div class="brand-logo pb-5">
-                                    <a href="/moha/index.html" class="logo-link">
-                                        <!-- <img class="logo-light logo-img logo-img-lg" src="/moha/images/logo-alt.png" srcset="/moha/images/alt.png" alt="logo" /> -->
-                                        <img class="logo-dark logo-img logo-img-lg" src="/moha/images/logo-alt.png" srcset="/moha/images/logo-alt.png" alt="logo-dark" />
+                                    <a href="/mohaindex.html" class="logo-link">
+                                        <!-- <img class="logo-light logo-img logo-img-lg" src="images/logo-alt.png" srcset="images/alt.png" alt="logo" /> -->
+                                        <img class="logo-dark logo-img logo-img-lg" src="images/logo-alt.png" srcset="images/logo-alt.png" alt="logo-dark" />
                                     </a>
                                 </div>
                                 <div class="nk-block-head">
@@ -121,16 +119,6 @@ if (isset($_POST['register'])) {
                                         </div>
                                         <div class="form-control-wrap">
                                             <input type="tel" name="name" class="form-control form-control-lg" id="name" value="<?php echo $name; ?>" placeholder="Gizachew Alemu" required />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="form-label-group">
-                                            <label class="form-label" for="tin">
-                                                TIN
-                                            </label>
-                                        </div>
-                                        <div class="form-control-wrap">
-                                            <input type="tel" name="tin" class="form-control form-control-lg" id="tin" value="<?php echo $tin; ?>" placeholder="102030405060" required />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -187,7 +175,7 @@ if (isset($_POST['register'])) {
                                 </div>
                                 <ul class="nav justify-center gx-4">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="/moha/login.php">Login</a>
+                                        <a class="nav-link" href="/mohalogin.php">Login</a>
                                     </li>
                                 </ul>
                             </div>
@@ -249,8 +237,8 @@ if (isset($_POST['register'])) {
     </div>
     </div>
 
-    <script src="/moha/assets/js/bundle.js?ver=3.1.3"></script>
-    <script src="/moha/assets/js/scripts.js?ver=3.1.3"></script>
-    <script src="/moha/assets/js/demo-settings.js?ver=3.1.3"></script>
+    <script src="assets/js/bundle.js?ver=3.1.3"></script>
+    <script src="assets/js/scripts.js?ver=3.1.3"></script>
+    <script src="assets/js/demo-settings.js?ver=3.1.3"></script>
 
 </html>

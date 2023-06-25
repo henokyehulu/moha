@@ -4,7 +4,7 @@
 		<rect id="PIESVGID_1_" x="5.7" width="500.1" height="512"/>
 	</defs>
 	<clipPath id="PIESVGID_2_">
-		<use xlink:href="#PIESVGID_1_"  style="overflow:visible;"/>
+		<use xlink:href="/moha#PIESVGID_1_"  style="overflow:visible;"/>
 	</clipPath>
 	<g style="clip-path:url(#PIESVGID_2_);">
 		<path style="fill:currentColor; opacity:.52;" d="M266.1,0c-5.8,0-10.4,4.8-10.4,10.7v234.4c0,5.9,4.7,10.7,10.4,10.7h229.2c5.8,0,10.4-4.8,10.4-10.7

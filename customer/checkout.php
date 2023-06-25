@@ -119,7 +119,7 @@ if (isset($_POST['make_order'])) {
                                                     <table class="table table-striped">
                                                         <thead>
                                                             <tr>
-                                                                <th class="w-150px">Item ID</th>
+                                                                <th class="w-150px">Product ID</th>
                                                                 <th class="w-60">Name</th>
                                                                 <th>Price</th>
                                                                 <th>Qty</th>

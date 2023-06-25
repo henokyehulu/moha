@@ -2,7 +2,7 @@
 include_once "../config.php";
 include_once "../src/needs_auth.php";
 
-$stmt = $pdo->prepare("SELECT customer_order.id,customer_order.created_at,customer_order.amount,customer_order.status,agent.name AS agent_name,SUM(orderandproduct_customer.quantity) AS quantity FROM orderandproduct_customer INNER JOIN customer_order ON customer_order.id = orderandproduct_customer.order_id LEFT JOIN user AS agent ON customer_order.agent = agent.id WHERE customer_order.customer = ? AND customer_order.status = 'success'  GROUP BY orderandproduct_customer.order_id ORDER BY customer_order.created_at DESC");
+$stmt = $pdo->prepare("SELECT customer_order.id,customer_order.created_at,customer_order.amount,customer_order.status,agent.name AS agent_name,SUM(orderandproduct_customer.quantity) AS quantity FROM orderandproduct_customer INNER JOIN customer_order ON customer_order.id = orderandproduct_customer.order_id LEFT JOIN user AS agent ON customer_order.agent = agent.id WHERE customer_order.customer = ? AND customer_order.status IN ('success', 'canceled')  GROUP BY orderandproduct_customer.order_id ORDER BY customer_order.created_at DESC");
 $stmt->execute([$user_id]);
 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -83,8 +83,15 @@ if (isset($_POST['mark_as_received'])) {
                                                         <span class="tb-sub"><?php echo date("d/m/Y", strtotime($order['created_at']));  ?></span>
                                                     </div>
                                                     <div class="nk-tb-col">
-                                                        <span class="dot bg-warning d-sm-none"></span>
-                                                        <span class="badge badge-sm badge-dot has-bg  <?php echo $order['status'] == "success" || $order['status'] == "agent_delivered" ? "bg-success" : "bg-warning" ?> d-none d-sm-inline-flex"><?php echo ucwords($order['status']) ?></span>
+                                                        <?php
+                                                        if ($order['status'] == 'success') { ?>
+                                                            <span class="badge badge-sm badge-dot has-bg bg-success d-none d-sm-inline-flex"><?php echo ucwords($order['status']) ?></span>
+                                                        <?php } else if ($order['status'] == 'canceled') { ?>
+                                                            <span class="badge badge-sm badge-dot has-bg bg-danger d-none d-sm-inline-flex"><?php echo ucwords($order['status']) ?></span>
+                                                        <?php } else { ?>
+                                                            <span class="badge badge-sm badge-dot has-bg bg-warning d-none d-sm-inline-flex"><?php echo ucwords($order['status']) ?></span>
+                                                        <?php }
+                                                        ?>
                                                     </div>
                                                     <div class="nk-tb-col tb-col-sm">
                                                         <span class="tb-sub"><?php echo ucwords($order['agent_name']) ?></span>

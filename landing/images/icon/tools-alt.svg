@@ -4,7 +4,7 @@
 		<rect id="TOOLSALT_SVGID_1_" width="512" height="512"/>
 	</defs>
 	<clipPath id="TOOLSALT_SVGID_2_">
-		<use xlink:href="#TOOLSALT_SVGID_1_"  style="overflow:visible;"/>
+		<use xlink:href="/moha#TOOLSALT_SVGID_1_"  style="overflow:visible;"/>
 	</clipPath>
 	<g style="clip-path:url(#TOOLSALT_SVGID_2_);">
 		<path style="fill:currentColor" d="M32.6,394.6L0,512l117.4-32.5L32.6,394.6z"/>

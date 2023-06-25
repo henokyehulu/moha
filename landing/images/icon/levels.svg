@@ -7,7 +7,7 @@
 		<rect id="SVGID_1_" y="39.7" width="512" height="432.6"/>
 	</defs>
 	<clipPath id="SVGID_2_">
-		<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+		<use xlink:href="/moha#SVGID_1_"  style="overflow:visible;"/>
 	</clipPath>
 	<path class="st0" d="M153,56.9h342v12.6H153V56.9z M153,85.7h342v188.1H153V85.7z M443.3,319h-342V102.1h35.6v179.7
 		c0,4.5,3.6,8.1,8.1,8.1h298.4V319z M407.7,389.3c0,5.8-4.7,10.5-10.5,10.5H26.6c-5.8,0-10.5-4.7-10.5-10.5V143.8

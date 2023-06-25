@@ -55,26 +55,6 @@ if (isset($_POST['add_to_cart'])) {
                                         <div class="nk-block-head-content">
                                             <h3 class="nk-block-title page-title">Products</h3>
                                         </div><!-- .nk-block-head-content -->
-                                        <div class="nk-block-head-content">
-                                            <div class="toggle-wrap nk-block-tools-toggle">
-                                                <a href="#" class="btn btn-icon btn-trigger toggle-expand me-n1" data-target="pageMenu"><em class="icon ni ni-more-v"></em></a>
-                                                <div class="toggle-expand-content" data-content="pageMenu">
-                                                    <!-- <ul class="nk-block-tools g-3">
-                                                        <li>
-                                                            <div class="drodown">
-                                                                <a href="#" class="dropdown-toggle dropdown-indicator btn btn-outline-light btn-white" data-bs-toggle="dropdown">Filter by type</a>
-                                                                <div class="dropdown-menu dropdown-menu-end">
-                                                                    <ul class="link-list-opt no-bdr">
-                                                                        <li><a href="#"><span>Soft drink</span></a></li>
-                                                                        <li><a href="#"><span>Sparkling water</span></a></li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul> -->
-                                                </div>
-                                            </div>
-                                        </div><!-- .nk-block-head-content -->
                                     </div><!-- .nk-block-between -->
                                 </div>
                                 <div class="nk-block">
@@ -89,22 +69,18 @@ if (isset($_POST['add_to_cart'])) {
                                                     <div class="card card-bordered product-card">
                                                         <div class="product-thumb">
                                                             <a href="/moha/customer/product-detail.php?id=<?php echo $product['id'] ?>">
-                                                                <img class="card-img-top" src="./images/product/lg-a.jpg" alt="">
+                                                                <img src="<?php echo $product['image'] ?? "./images/no-image.png" ?>" class="card-img-top" style="object-fit: cover;" alt="product-image" height="200" />
                                                             </a>
                                                         </div>
-                                                        <div class="card-inner text-center">
-                                                            <!-- <ul class="product-tags">
-                                                                <li><a href="#">
-                                                                        <?php echo $product['type'] ?>
-                                                                    </a></li>
-                                                            </ul> -->
+                                                        <div class=" card-inner text-center">
                                                             <h5 class="product-title"><a href="/moha/customer/product-detail.php"> <?php echo $product['name'] ?>
                                                                 </a></h5>
                                                             <div class="product-price text-primary h5">$ <?php echo $product['price'] ?>
                                                             </div>
                                                             <form method="post">
                                                                 <input type="text" name="id" value="<?php echo $product['id'] ?>" hidden>
-                                                                <button name="add_to_cart" type="submit" class="btn btn-primary"><em class="icon ni ni-cart"></em><span>Quick add</span> </a>
+                                                                <button name="add_to_cart" type="submit" class="btn btn-primary"><em class="icon ni ni-cart"></em><span>Quick add</span>
+                                                                    </a>
                                                             </form>
                                                         </div>
                                                     </div>

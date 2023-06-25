@@ -9,7 +9,7 @@
 		<rect id="CODEDISPLAY_SVGID_1_" x="119.5" y="102.4" width="256.6" height="204.8"/>
 	</defs>
 	<clipPath id="CODEDISPLAY_SVGID_2_">
-		<use xlink:href="#CODEDISPLAY_SVGID_1_"  style="overflow:visible;"/>
+		<use xlink:href="/moha#CODEDISPLAY_SVGID_1_"  style="overflow:visible;"/>
 	</clipPath>
 	<g style="clip-path:url(#CODEDISPLAY_SVGID_2_);">
 		<path style="fill:#fff" d="M373.5,198.2l-59.4-63.1c-3.6-3.9-9.7-4.1-13.6-0.4c-3.9,3.7-4,9.8-0.4,13.7l53.1,56.5l-53.1,56.5

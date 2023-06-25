@@ -36,7 +36,7 @@
             fileName = fileName.substring(0, (fileName.indexOf("?") == -1) ? fileName.length : fileName.indexOf("?"));
 
         $(_link).each(function() {
-            var self = $(this), _self_link = self.attr('href');
+            var self = $(this), _self_link = self.attr('href="/moha;
             if (fileName.match(_self_link)) {
                 self.closest("li").addClass('active current-page').parents().closest("li").addClass("active current-page");
                 self.closest("li").children('.nk-menu-sub').css('display','block');
@@ -181,7 +181,7 @@
         var _menuOffset = NioApp.MenuOffset();
         NioApp.coms.onResize.push(NioApp.MenuOffset);
         $body.scrollspy({ target: '.header-main', offset: _menuOffset });
-        let trigger = document.querySelectorAll('a.menu-link[href*="#"]:not([href="#"])');
+        let trigger = document.querySelectorAll('a.menu-link[href="/moha"#"]:not([href="/moha#"])');
         trigger.forEach(function(element, index) {
             element.addEventListener("click", function(event) {
                 event.preventDefault();
@@ -282,12 +282,12 @@
     NioApp.BS.tabfix = function(elm) {
         var tab = (elm) ? elm : '[data-toggle="modal"]';
         $(tab).on('click', function(){
-            var _this = $(this), target = _this.data('target'), target_href = _this.attr('href'),
+            var _this = $(this), target = _this.data('target'), target_href="/moha _this.attr('href="/moha,
                 tg_tab = _this.data('tab-target');
 
-            var modal = (target) ? $body.find(target) : $body.find(target_href);
+            var modal = (target) ? $body.find(target) : $body.find(target_href="/moha
             if (tg_tab && tg_tab !=='#' && modal) {
-                modal.find('[href="'+tg_tab+'"]').tab('show');
+                modal.find('[href="/moha'+tg_tab+'"]').tab('show');
             } else if(modal) {
                 var tabdef = modal.find('.nk-nav.nav-tabs');
                 var link = $(tabdef[0]).find('[data-toggle="tab"]');
@@ -364,8 +364,8 @@
         if($(elm).exists() && typeof($.fn.slick) === 'function') {
             $(elm).each(function(){
                 var def = {
-                        'prevArrow':'<div class="slick-arrow-prev"><a href="javascript:void(0);" class="slick-prev"><em class="icon ni ni-chevron-left"></em></a></div>',
-                        'nextArrow':'<div class="slick-arrow-next"><a href="javascript:void(0);" class="slick-next"><em class="icon ni ni-chevron-right"></em></a></div>',
+                        'prevArrow':'<div class="slick-arrow-prev"><a href="/mohajavascript:void(0);" class="slick-prev"><em class="icon ni ni-chevron-left"></em></a></div>',
+                        'nextArrow':'<div class="slick-arrow-next"><a href="/mohajavascript:void(0);" class="slick-next"><em class="icon ni ni-chevron-right"></em></a></div>',
                         rtl: NioApp.State.isRTL
                     }, 
                     attr = (opt) ? extend(def, opt) : def;

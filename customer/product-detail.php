@@ -61,10 +61,7 @@ if (isset($_POST['add_to_cart'])) {
                                 <div class="nk-block-head nk-block-head-sm">
                                     <div class="nk-block-between g-3">
                                         <div class="nk-block-head-content">
-                                            <h3 class="nk-block-title page-title">Product Details</h3>
-                                            <div class="nk-block-des text-soft">
-                                                <p>See our product in depth.</p>
-                                            </div>
+                                            <h3 class="nk-block-title page-title">Product Detail</h3>
                                         </div>
                                         <div class="nk-block-head-content">
                                             <a href="/moha/customer/order.php" class="btn btn-outline-light bg-white d-none d-sm-inline-flex"><em class="icon ni ni-arrow-left"></em><span>Back</span></a>
@@ -78,7 +75,8 @@ if (isset($_POST['add_to_cart'])) {
                                             <div class="row pb-5">
                                                 <div class="col-lg-6">
                                                     <div class="product-gallery me-xl-1 me-xxl-5">
-                                                        <img src="./images/product/lg-a.jpg" class="rounded w-100" alt="">
+                                                        <!-- <img src="./images/product/lg-a.jpg" class="rounded w-100" alt=""> -->
+                                                        <img src="<?php echo $product['image'] ?? "./images/no-image.png" ?>" class="rounded w-100" style="object-fit: cover;" alt="product-image" height="400" />
                                                     </div><!-- .product-gallery -->
                                                 </div><!-- .col -->
                                                 <div class="col-lg-6">
@@ -91,11 +89,7 @@ if (isset($_POST['add_to_cart'])) {
                                                         <div class="product-meta">
                                                             <ul class="d-flex g-3 gx-5">
                                                                 <li>
-                                                                    <div class="fs-14px text-muted">Type</div>
-                                                                    <div class="fs-16px fw-bold text-secondary"><?php echo $product['type'] ?></div>
-                                                                </li>
-                                                                <li>
-                                                                    <div class="fs-14px text-muted">Model Number</div>
+                                                                    <div class="fs-14px text-muted">Product ID</div>
                                                                     <div class="fs-16px fw-bold text-secondary">#<?php echo $product['id'] ?></div>
                                                                 </li>
                                                             </ul>
@@ -138,19 +132,20 @@ if (isset($_POST['add_to_cart'])) {
                             </div>
                         </div>
                     </div>
-                    <!-- content @e -->
-                    <!-- footer @s -->
-                    <?php include_once "./lib/footer.php" ?>
-
-                    <!-- footer @e -->
                 </div>
-                <!-- wrap @e -->
+                <!-- content @e -->
+                <!-- footer @s -->
+                <?php include_once "./lib/footer.php" ?>
+
+                <!-- footer @e -->
             </div>
-            <!-- main @e -->
+            <!-- wrap @e -->
         </div>
-        <!-- JavaScript -->
-        <script src="./assets/js/bundle.js?ver=3.1.3"></script>
-        <script src="./assets/js/scripts.js?ver=3.1.3"></script>
+        <!-- main @e -->
+    </div>
+    <!-- JavaScript -->
+    <script src="./assets/js/bundle.js?ver=3.1.3"></script>
+    <script src="./assets/js/scripts.js?ver=3.1.3"></script>
 </body>
 
 </html>

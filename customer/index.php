@@ -4,15 +4,15 @@ include_once "../src/needs_auth.php";
 
 
 
-$stmt = $pdo->prepare("SELECT COUNT(amount) AS total FROM customer_order WHERE customer = ?");
+$stmt = $pdo->prepare("SELECT COUNT(amount) AS total FROM customer_order WHERE customer = ? AND status NOT IN ('success','canceled')");
 $stmt->execute([$user_id]);
-$total_orders = $stmt->fetch(PDO::FETCH_ASSOC);
+$pending_orders = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$stmt = $pdo->prepare("SELECT SUM(amount) AS total FROM customer_order");
-$stmt->execute();
+$stmt = $pdo->prepare("SELECT SUM(amount) AS total FROM customer_order WHERE status != 'canceled' AND customer = ?");
+$stmt->execute([$user_id]);
 $total_spent = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$stmt = $pdo->prepare("SELECT SUM(orderandproduct_customer.quantity) AS total FROM customer_order INNER JOIN orderandproduct_customer ON customer_order.id = orderandproduct_customer.order_id WHERE customer_order.customer = ?");
+$stmt = $pdo->prepare("SELECT SUM(orderandproduct_customer.quantity) AS total FROM customer_order INNER JOIN orderandproduct_customer ON customer_order.id = orderandproduct_customer.order_id WHERE status != 'canceled' AND customer_order.customer = ? ");
 $stmt->execute([$user_id]);
 $total_products_bought = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -77,14 +77,14 @@ $recent_orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <div class="card">
                                                 <div class="nk-ecwg nk-ecwg6">
                                                     <div class="card-inner">
-                                                        <div class="card-title-group">
+                                                        <a href="/moha/customer/my-orders.php" class="card-title-group">
                                                             <div class="card-title">
-                                                                <h6 class="title">Total Orders</h6>
+                                                                <h6 class="title">Pending Orders</h6>
                                                             </div>
-                                                        </div>
+                                                        </a>
                                                         <div class="data">
                                                             <div class="data-group">
-                                                                <div class="amount"><?php echo $total_orders['total'] ?? 0 ?></div>
+                                                                <div class="amount"><?php echo $pending_orders['total'] ?? 0 ?></div>
                                                             </div>
 
                                                         </div>
@@ -96,11 +96,11 @@ $recent_orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <div class="card">
                                                 <div class="nk-ecwg nk-ecwg6">
                                                     <div class="card-inner">
-                                                        <div class="card-title-group">
+                                                        <a href="/moha/customer/transactions.php" class="card-title-group">
                                                             <div class="card-title">
                                                                 <h6 class="title">Total Spent</h6>
                                                             </div>
-                                                        </div>
+                                                        </a>
                                                         <div class="data">
                                                             <div class="data-group">
                                                                 <div class="amount">$<?php echo number_format((float)$total_spent['total'] ?? 0, 2, '.', ''); ?></div>
@@ -179,7 +179,16 @@ $recent_orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                                     <span class="tb-sub tb-amount"><?php echo $order['amount'] ?> <span>Birr</span></span>
                                                                 </div>
                                                                 <div class="nk-tb-col">
-                                                                    <span class="badge badge-dot badge-dot-xs  <?php echo $order['status'] == "success" ? "bg-success" : "bg-warning" ?>"><?php echo ucwords($order['status']) ?></span>
+                                                                    <?php
+                                                                    if ($order['status'] == 'success') { ?>
+                                                                        <span class="badge badge-dot badge-dot-xs bg-success"><?php echo ucwords($order['status']) ?></span>
+                                                                    <?php } else if ($order['status'] == 'canceled') { ?>
+                                                                        <span class="badge badge-dot badge-dot-xs bg-danger"><?php echo ucwords($order['status']) ?></span>
+                                                                    <?php } else { ?>
+                                                                        <span class="badge badge-dot badge-dot-xs bg-warning"><?php echo ucwords($order['status']) ?></span>
+                                                                    <?php }
+                                                                    ?>
+
                                                                 </div>
                                                             </div>
                                                         <?php endforeach; ?>

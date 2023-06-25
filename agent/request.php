@@ -9,7 +9,7 @@ $stmt = $pdo->prepare("SELECT * FROM customer_order WHERE id=? AND status = 'pen
 $stmt->execute([$order_id]);
 $order = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if(!$order){
+if (!$order) {
     echo "<script>
     window.location.href='/moha/agent/requests.php';
     alert('The order does not exist!');
@@ -19,7 +19,7 @@ $stmt = $pdo->prepare("SELECT user.state FROM customer_order INNER JOIN user WHE
 $stmt->execute([$order_id]);
 $customer = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if($user_state != $customer['state']){
+if ($user_state != $customer['state']) {
     echo "<script>
     window.location.href='/moha/agent/requests.php';
     alert('This order is not available in your area!');
@@ -46,29 +46,31 @@ if (isset($_POST['accept_request'])) {
 ?>
 
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View request</title>
 </head>
+
 <body>
     <a href="/moha/agent/requests.php">back</a>
 
     <p>Order:</p>
     <table>
         <tbody>
-          
-                <?php foreach ($order_list as $order) : ?>
-                    <tr>
-                        <td>
-                            <p> x<?php echo $order['quantity'] . " " . $order['name'] ?> creat</p>
-                        </td>
-                        <!-- <td class="price">&dollar;<?php echo $product['price'] * $products_in_cart[$product['id']] * 24 ?></td> -->
 
-                    </tr>
-                <?php endforeach; ?>
-           
+            <?php foreach ($order_list as $order) : ?>
+                <tr>
+                    <td>
+                        <p> x<?php echo $order['quantity'] . " " . $order['name'] ?> creat</p>
+                    </td>
+                    <!-- <td class="price">&dollar;<?php echo $product['price'] * $products_in_cart[$product['id']] * 24 ?></td> -->
+
+                </tr>
+            <?php endforeach; ?>
+
         </tbody>
         <tfoot>
             <!-- <tr>
@@ -84,13 +86,14 @@ if (isset($_POST['accept_request'])) {
                 </td>
             </tr>
         -->
-        
-        <form method="post">
-            <button name="accept_request" type="submit">Accept order</button>
-        </form>
 
-        </tfoot> 
+            <form method="post">
+                <button name="accept_request" type="submit">Accept order</button>
+            </form>
+
+        </tfoot>
     </table>
-   
+
 </body>
+
 </html>

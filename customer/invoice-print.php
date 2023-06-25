@@ -125,7 +125,7 @@ if ($invoice['customer'] !== $user_id || empty($order_id) || $invoice['status'] 
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2"></td>
-                                                    <td colspan="2">Processing fee</td>
+                                                    <td colspan="2">Shipping</td>
                                                     <td>$<?php echo $shipping ?></td>
                                                 </tr>
                                                 <tr>

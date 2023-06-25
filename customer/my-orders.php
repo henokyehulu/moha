@@ -2,7 +2,7 @@
 include_once "../config.php";
 include_once "../src/needs_auth.php";
 
-$stmt = $pdo->prepare("SELECT customer_order.id,customer_order.created_at,customer_order.amount,customer_order.status,agent.name AS agent_name,SUM(orderandproduct_customer.quantity) AS quantity FROM orderandproduct_customer INNER JOIN customer_order ON customer_order.id = orderandproduct_customer.order_id LEFT JOIN user AS agent ON customer_order.agent = agent.id WHERE customer_order.customer = ? AND customer_order.status != 'success'  GROUP BY orderandproduct_customer.order_id ORDER BY customer_order.created_at DESC");
+$stmt = $pdo->prepare("SELECT customer_order.id,customer_order.created_at,customer_order.amount,customer_order.status,agent.name AS agent_name,SUM(orderandproduct_customer.quantity) AS quantity FROM orderandproduct_customer INNER JOIN customer_order ON customer_order.id = orderandproduct_customer.order_id LEFT JOIN user AS agent ON customer_order.agent = agent.id WHERE customer_order.customer = ? AND customer_order.status NOT IN ('success', 'canceled') GROUP BY orderandproduct_customer.order_id ORDER BY customer_order.created_at DESC");
 $stmt->execute([$user_id]);
 $orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -14,8 +14,26 @@ if (isset($_POST['mark_as_received'])) {
         'customer_received' => true,
         'order_id' => $order_id
     ]);
-    header("location:/moha/customer/my-orders.php");
+    echo "<script>
+    window.location.href='/moha/customer/transactions.php';
+    alert('Order successfully received!');
+    </script>";
 }
+
+if (isset($_POST['cancel_order'])) {
+    $order_id = $_POST['id'];
+    $stmt = $pdo->prepare("UPDATE customer_order SET status=:status WHERE id=:order_id");
+    $stmt->execute([
+        'status' => "canceled",
+        'order_id' => $order_id
+    ]);
+    echo "<script>
+    window.location.href='/moha/customer/my-orders.php';
+    alert('Order successfully canceled!');
+    </script>";
+}
+
+
 
 
 ?>
@@ -115,9 +133,9 @@ if (isset($_POST['mark_as_received'])) {
                                                                 <li>
                                                                     <form method="post">
                                                                         <input name="id" value="<?php echo $order['id'] ?>" type="id" hidden required />
-                                                                        <button type="submit" name="mark_as_received" class="btn btn-icon btn-trigger btn-tooltip" aria-label="Mark as Delivered" data-bs-original-title="Mark as received">
+                                                                        <button type="submit" name="mark_as_received" class="btn btn-icon btn-trigger btn-tooltip" aria-label="Mark as Delivered" data-bs-original-title="Mark as received" style="color:green;">
 
-                                                                            <em class="icon ni ni-truck"></em>
+                                                                            <em class="icon ni ni-check"></em>
                                                                         </button>
                                                                     </form>
                                                                 </li>
@@ -133,6 +151,19 @@ if (isset($_POST['mark_as_received'])) {
                                                             <?php }
                                                             ?>
 
+                                                            <?php
+                                                            if ($order['status'] == 'pending') { ?>
+                                                                <li>
+                                                                    <form method="post">
+                                                                        <input name="id" value="<?php echo $order['id'] ?>" type="id" hidden required />
+                                                                        <button onclick="return confirm('Are you sure you want to cancel this order?');" type="submit" name="cancel_order" class="btn btn-icon btn-trigger btn-tooltip" aria-label="Cancel Order" data-bs-original-title="Cancel Order" style="color: red;">
+                                                                            <em class="icon ni ni-cross"></em>
+                                                                        </button>
+                                                                    </form>
+                                                                </li>
+                                                            <?php }
+                                                            ?>
+
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -140,8 +171,6 @@ if (isset($_POST['mark_as_received'])) {
                                         <?php endif; ?>
 
                                         <!-- .nk-tb-item -->
-
-
 
 
                                     </div><!-- .nk-tb-list -->

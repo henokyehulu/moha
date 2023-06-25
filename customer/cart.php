@@ -86,7 +86,6 @@ if (isset($_POST['clear_cart'])) {
                                                     <div class="nk-tb-item nk-tb-head">
                                                         <div class="nk-tb-col tb-col-sm"><span>Name</span></div>
                                                         <div class="nk-tb-col"><span>Price</span></div>
-                                                        <div class="nk-tb-col tb-col-md"><span>Category</span></div>
                                                         <div class="nk-tb-col tb-col-md"><span>Qty</span></div>
                                                         <div class="nk-tb-col tb-col-md"><span></span></div>
                                                     </div>
@@ -100,15 +99,12 @@ if (isset($_POST['clear_cart'])) {
                                                             <div class="nk-tb-item">
                                                                 <div class="nk-tb-col tb-col-sm">
                                                                     <span class="tb-product">
-                                                                        <img src="./images/product/i.png" alt="" class="thumb">
+                                                                        <img src="<?php echo $product['image'] ?? "./images/no-image.png" ?>" class="thumb" style="object-fit: cover;" alt="product-image" width="60" height="60" />
                                                                         <span class="title"><?php echo $product['name'] ?></span>
                                                                     </span>
                                                                 </div>
                                                                 <div class="nk-tb-col">
                                                                     <span class="tb-lead">$ <?php echo $product['price'] * $products_in_cart[$product['id']] * 24 ?></span>
-                                                                </div>
-                                                                <div class="nk-tb-col tb-col-md">
-                                                                    <span class="tb-sub">Men, Holder</span>
                                                                 </div>
                                                                 <div class="nk-tb-col w-140px">
                                                                     <form method="post">

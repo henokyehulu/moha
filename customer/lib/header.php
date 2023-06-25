@@ -53,7 +53,7 @@ if (isset($_POST['clear_cart'])) {
                                         foreach ($my_cart as $product) { ?>
                                             <div class="nk-notification-item dropdown-inner">
                                                 <div class="nk-notification-icon">
-                                                    <em class="icon icon-circle bg-warning-dim ni ni-curve-down-right"></em>
+                                                    <img src="<?php echo $product['image'] ?? "./images/no-image.png" ?>" class="rounded" style="object-fit: cover;" alt="product-image" width="40" height="40" />
                                                 </div>
                                                 <div class="nk-notification-content">
                                                     <div class="nk-notification-text"><?php echo $product['name'] ?></div>
